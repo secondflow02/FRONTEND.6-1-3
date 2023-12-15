@@ -10,7 +10,8 @@ const MainPagination = ({ items, itemsPage }) => {
 
     const totalPage = Math.ceil(items.length / itemsPage);
 
-    //현재 페이지의 첫 번째 아이템이 전체 아이템 목록에서 몇 번째 인덱스에 위치해야 하는지를 결정??
+    // 해당 페이지에 보여질 제일 첫 item의 index
+    // currentPage = 5, startIndex = 80, endIndex = 100 , 80~99(20개) 5번 페이지 (0~19)
     const startIndex = (currentPage - 1) * itemsPage;
 
     //마지막인덱스 = startIndex+itemPage 와 item길이중 작은값을 선택
@@ -33,13 +34,21 @@ const MainPagination = ({ items, itemsPage }) => {
             handleChange(currentPage - 1);
         }
     };
-
     // '다음' 버튼함수
     const onNextBtn = () => {
         if (currentPage < totalPage) {
             handleChange(currentPage + 1);
         }
     };
+    //'맨처음' 버튼함수
+    const onFirstBtn = () => {
+        handleChange(1);
+    };
+    //'맨끝' 버튼함수
+    const onLastBtn = () => {
+        handleChange(totalPage);
+    };
+
     return (
         <>
             <Styled.Wrapper>
@@ -52,6 +61,7 @@ const MainPagination = ({ items, itemsPage }) => {
                 </Styled.Container>
             </Styled.Wrapper>
             <Styled.BtnWrapper>
+                <Styled.PageBtn onClick={onFirstBtn}>맨처음</Styled.PageBtn>
                 <Styled.PageBtn onClick={onPrevBtn}>이전</Styled.PageBtn>
                 {Array.from({ length: totalPage }).map((_, index) => (
                     <Styled.PageBtn
@@ -63,6 +73,7 @@ const MainPagination = ({ items, itemsPage }) => {
                     </Styled.PageBtn>
                 ))}
                 <Styled.PageBtn onClick={onNextBtn}>다음</Styled.PageBtn>
+                <Styled.PageBtn onClick={onLastBtn}>맨끝</Styled.PageBtn>
             </Styled.BtnWrapper>
         </>
     );
